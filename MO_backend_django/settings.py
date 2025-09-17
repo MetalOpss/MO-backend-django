@@ -75,10 +75,15 @@ WSGI_APPLICATION = 'MO_backend_django.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'metal_ops',       # Nombre de tu base de datos
+        'USER': 'admin',  # Usuario de PostgreSQL
+        'PASSWORD': '1234',   # Contraseña del usuario
+        'HOST': 'localhost',         # o la IP del servidor PostgreSQL
+        'PORT': '5432',              # Puerto por defecto
     }
 }
+
 
 
 # Password validation
