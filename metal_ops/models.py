@@ -38,7 +38,7 @@ class Usuario(models.Model):
 
         super().save(*args, **kwargs)
 
-class cliente(models.Model):
+class Cliente(models.Model):
     TIPO_DOC_CHOICES = [
         ("DNI", "DNI"),
         ("RUC", "RUC"),
@@ -68,11 +68,35 @@ class cliente(models.Model):
     def __str__(self):
         return f"{self.doc_cliente} - {self.nombre_cliente}"
 
-class servicio(models.Model):
+class Servicio(models.Model):
+    id_servicio = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100)
-    maquina = models.CharField(max_length=100)
-    #agregar operarios de servicio
-    
+    maquina = models.CharField(max_length=100, blank=True, null=True)
+
+    def __str__(self):
+        return self.nombre
+
+class Operario(models.Model):
+    id_operario = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=100)
+
+    # Especialidad principal → FK a un servicio
+    especialidad = models.ForeignKey(
+        Servicio,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="operarios_especializados"
+    )
+
+    # Todos los servicios que puede hacer → M:N
+    servicios = models.ManyToManyField(
+        Servicio,
+        related_name="operarios"
+    )
+
+    def __str__(self):
+        return f"{self.nombre} ({self.especialidad.nombre if self.especialidad else 'Sin especialidad'})"   
 
 class OrdenTrabajo(models.Model):
     # PK autoincremental
@@ -120,14 +144,13 @@ class OrdenTrabajo(models.Model):
     )
 
     # Flujo de servicios (ManyToMany porque puede tener varios servicios)
-    flujo_servicios = models.ManyToManyField(
+    flujo_tarea = models.ManyToManyField(
         "Servicio", 
-        through="FlujoTrabajo",
+        through="FlujoTarea",
         related_name="ordenes_trabajo"
     )
 
-    fecha_entrega_estimada = models.DateTimeField()
-    fecha_entrega_real = models.DateTimeField(null=True, blank=True)
+    fecha_entrega = models.DateTimeField()
 
     def __str__(self):
         return f"OT-{self.id_ot} ({self.titulo})"
@@ -142,3 +165,21 @@ class ArchivoAdjunto(models.Model):
     archivo = models.FileField(upload_to="ordenes_adjuntos/")
     descripcion = models.CharField(max_length=200, blank=True, null=True)
     fecha_subida = models.DateTimeField(auto_now_add=True)
+
+
+class FlujoTarea(models.Model):
+    id_flujo_tarea = models.AutoField(primary_key=True)
+    orden_trabajo = models.ForeignKey("OrdenTrabajo", on_delete=models.CASCADE, related_name="flujo_servicios")
+    servicio = models.ForeignKey("Servicio", on_delete=models.CASCADE, related_name="flujo_servicios")
+    tiempo_estimado = models.DurationField()
+    orden_ejecucion = models.PositiveIntegerField(default=1)
+
+class Tarea(models.Model):
+    id_tarea = models.AutoField(primary_key=True)
+    flujo_tarea = models.ForeignKey(FlujoTarea, on_delete=models.CASCADE, related_name="tareas")
+    operario = models.ForeignKey("Operario", on_delete=models.SET_NULL, null=True, blank=True, related_name="tareas")
+    cantidad_asignada = models.PositiveIntegerField(default=1)
+    tiempo_estimado = models.DurationField()
+    fecha_inicio = models.DateTimeField(null=True, blank=True)
+    fecha_fin = models.DateTimeField(null=True, blank=True)
+    estado = models.CharField(max_length=20, choices=[("PENDIENTE","Pendiente"),("En correccion","Correcion"),("EN_PROCESO","En Proceso"),("FINALIZADA","Finalizada")], default="PENDIENTE")
