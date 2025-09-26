@@ -18,6 +18,11 @@ from urllib.parse import urlparse, parse_qsl
 
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+
+# Leer la URL de la DB desde el .env
+db_url = os.getenv("DATABASE_URL")
+tmpPostgres = urlparse(db_url)  # aquí se crea tmpPostgres
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 

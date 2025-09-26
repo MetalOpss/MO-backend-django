@@ -95,7 +95,7 @@ class Servicio(models.Model):
     id_servicio = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField(null=True, blank=True)
-    maquina = models.ForeignKey(Maquina, on_delete=models.SET_NULL, null=True, blank=True)
+    maquina = models.ForeignKey(Maquina, on_delete=models.SET_NULL, null=True, blank=True, related_name="maquina")
 
     class Meta:
         db_table = "servicio"
