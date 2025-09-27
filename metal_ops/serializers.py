@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Sede, Cliente, OrdenTrabajo, Maquina, Servicio
+from .models import Sede, Cliente, OrdenTrabajo, Maquina, Servicio, Tarea
 
 class SedeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -28,4 +28,9 @@ class MaquinaSerializer(serializers.ModelSerializer):
 class ServicioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Servicio
+        fields = '__all__'
+
+class TareaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tarea
         fields = '__all__'
