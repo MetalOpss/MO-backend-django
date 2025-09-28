@@ -11,7 +11,6 @@ from .serializers import (
 class CrearSedeView(generics.CreateAPIView):
     queryset = Sede.objects.all()
     serializer_class = SedeSerializer
-    lookup_field = "id"
 
 class ListarSedeView(generics.ListAPIView):
     queryset = Sede.objects.all()
@@ -30,12 +29,12 @@ class ListarClienteView(generics.ListAPIView):
 class EditarClienteView(generics.UpdateAPIView):
     queryset = Cliente.objects.all()
     serializer_class = ClienteSerializer
-    lookup_field = "id"
+    lookup_field = "id_cliente"
 
 class EliminarClienteView(generics.DestroyAPIView):
     queryset = Cliente.objects.all()
     serializer_class = ClienteSerializer
-    lookup_field = "id"
+    lookup_field = "id_cliente"
 
 # ===== ENTIDAD OT =====
 
@@ -90,11 +89,11 @@ class ListarTareaView(generics.ListAPIView):
 class EditarTareaView(generics.UpdateAPIView):
     queryset = Tarea.objects.all()
     serializer_class = TareaSerializer
-    lookup_field = "id"
+    lookup_field = "id_tarea"
 
 class EliminarTareaView(generics.DestroyAPIView):
     queryset = Tarea.objects.all()
     serializer_class = TareaSerializer
-    lookup_field = "id"
+    lookup_field = "id_tarea"
 
 
