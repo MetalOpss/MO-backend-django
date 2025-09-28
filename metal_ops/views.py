@@ -50,12 +50,12 @@ class ListarOrdenTrabajoView(generics.ListAPIView):
 class EditarOrdenTrabajoView(generics.UpdateAPIView):
     queryset = OrdenTrabajo.objects.all()
     serializer_class = OrdenTrabajoSerializer
-    lookup_field = "id"
+    lookup_field = "id_ot"
 
 class EliminarOrdenTrabajoView(generics.DestroyAPIView):
     queryset = OrdenTrabajo.objects.all()
     serializer_class = OrdenTrabajoSerializer
-    lookup_field = "id"
+    lookup_field = "id_ot"
 
 # ===== ENTIDAD MAQUINA =====
 
