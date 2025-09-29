@@ -27,3 +27,4 @@ urlpatterns = [
     path('tareas/eliminar/<int:id_tarea>', EliminarTareaView.as_view(), name='eliminar-tarea'),
     
 ]   
+
