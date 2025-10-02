@@ -28,7 +28,7 @@ class Tarea(models.Model):
     ])
     flujo_tarea = models.ForeignKey(FlujoTarea, on_delete=models.CASCADE, related_name="tareas")
     servicio = models.ForeignKey(Servicio, on_delete=models.CASCADE)
-    usuario_id = models.IntegerField(null=True, blank=True)  # viene de Spring Boot
+    usuario_id = models.IntegerField(null=True, blank=True) 
     maquina = models.ForeignKey(Maquina, on_delete=models.SET_NULL, null=True, blank=True)
     tiempo_planificado = models.DurationField(null=True, blank=True)
     tiempo_real = models.DurationField(null=True, blank=True)
