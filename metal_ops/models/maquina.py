@@ -1,7 +1,7 @@
 from django.db import models    
 
 class Maquina(models.Model):
-    id_maquina = models.AutoField(primary_key=True)
+    id_maquina = models.BigAutoField(primary_key=True)
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField(null=True, blank=True)
 

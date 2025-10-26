@@ -1,7 +1,7 @@
 from django.db import models
 
 class Cliente(models.Model):
-    id_cliente = models.AutoField(primary_key=True)
+    id_cliente = models.BigAutoField(primary_key=True)
     tipo_doc_cliente = models.CharField(max_length=3, choices=[("DNI", "DNI"), ("RUC", "RUC")])
     doc_cliente = models.CharField(max_length=11, unique=True)
     nombre_cliente = models.CharField(max_length=100)
