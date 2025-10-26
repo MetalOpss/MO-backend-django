@@ -3,7 +3,7 @@ from .cliente import Cliente
 from .sede import Sede
 
 class OrdenTrabajo(models.Model):
-    id_ot = models.AutoField(primary_key=True)
+    id_ot = models.BigAutoField(primary_key=True)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, related_name="ordenes")
     titulo = models.CharField(max_length=255)
     tipo_ot = models.CharField(max_length=20, choices=[
@@ -24,7 +24,7 @@ class OrdenTrabajo(models.Model):
         return f"OT-{self.id_ot} ({self.titulo})"
     
 class ArchivoAdjunto(models.Model):
-    id_archivo = models.AutoField(primary_key=True)
+    id_archivo = models.BigAutoField(primary_key=True)
     orden_trabajo = models.ForeignKey(OrdenTrabajo, on_delete=models.CASCADE, related_name="archivos")
     archivo = models.FileField(upload_to="ordenes_adjuntos/")
     descripcion = models.CharField(max_length=200, null=True, blank=True)

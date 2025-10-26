@@ -4,7 +4,7 @@ from .servicio import Servicio
 from .maquina import  Maquina
 
 class FlujoTarea(models.Model):
-    id_flujo_tarea = models.AutoField(primary_key=True)
+    id_flujo_tarea = models.BigAutoField(primary_key=True)
     orden_trabajo = models.ForeignKey(OrdenTrabajo, on_delete=models.CASCADE, related_name="flujos")
     orden_ejecucion = models.PositiveIntegerField()
 
@@ -19,7 +19,7 @@ class FlujoTarea(models.Model):
 # TAREA
 # ==============================
 class Tarea(models.Model):
-    id_tarea = models.AutoField(primary_key=True)
+    id_tarea = models.BigAutoField(primary_key=True)
     estado_tarea = models.CharField(max_length=20, choices=[
         ("PENDIENTE", "Pendiente"),
         ("EN_PROCESO", "En proceso"),
@@ -28,7 +28,7 @@ class Tarea(models.Model):
     ])
     flujo_tarea = models.ForeignKey(FlujoTarea, on_delete=models.CASCADE, related_name="tareas")
     servicio = models.ForeignKey(Servicio, on_delete=models.CASCADE)
-    usuario_id = models.IntegerField(null=True, blank=True) 
+    usuario_id = models.BigIntegerField(null=True, blank=True) 
     maquina = models.ForeignKey(Maquina, on_delete=models.SET_NULL, null=True, blank=True)
     tiempo_planificado = models.DurationField(null=True, blank=True)
     tiempo_real = models.DurationField(null=True, blank=True)
