@@ -12,3 +12,7 @@ from .tarea import (
     CrearTareaView, ListarTareaView,
     EditarTareaView, EliminarTareaView
 )
+from .notificacion import (
+    CrearNotificacionView, ListarNotificacionesView, EditarNotificacionView, EliminarNotificacionView,
+    CrearNotificacionUsuarioView, ListarNotificacionesUsuarioView, MarcarNotificacionLeidaView
+)

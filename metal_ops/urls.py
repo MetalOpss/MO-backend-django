@@ -4,7 +4,8 @@ from .views import (
     EliminarOrdenTrabajoView, ListarMaquinaView, CrearServicioView, ListarClienteView, EditarClienteView,
     EliminarClienteView,
     CrearMaquinaView, CrearTareaView, ListarTareaView, EditarTareaView,
-    EliminarTareaView
+    EliminarTareaView, CrearNotificacionUsuarioView, ListarNotificacionesUsuarioView, MarcarNotificacionLeidaView,
+    CrearNotificacionView, ListarNotificacionesView, EditarNotificacionView, EliminarNotificacionView
 )
 
 urlpatterns = [
@@ -25,6 +26,17 @@ urlpatterns = [
     path('tareas/lista/', ListarTareaView.as_view(), name='lista-tarea'),
     path('tareas/editar/<int:id_tarea>', EditarTareaView.as_view(), name='editar-tarea'),
     path('tareas/eliminar/<int:id_tarea>', EliminarTareaView.as_view(), name='eliminar-tarea'),
-    
+        # ==============================
+    # NOTIFICACIONES
+    # ==============================
+    path('notificaciones/crear/', CrearNotificacionView.as_view(), name='crear-notificacion'),
+    path('notificaciones/lista/', ListarNotificacionesView.as_view(), name='listar-notificaciones'),
+    path('notificaciones/editar/<int:id_notificacion>/', EditarNotificacionView.as_view(), name='editar-notificacion'),
+    path('notificaciones/eliminar/<int:id_notificacion>/', EliminarNotificacionView.as_view(), name='eliminar-notificacion'),
+
+    path('notificaciones-usuario/crear/', CrearNotificacionUsuarioView.as_view(), name='crear-notificacion-usuario'),
+    path('notificaciones-usuario/<int:usuario_id>/', ListarNotificacionesUsuarioView.as_view(), name='listar-notificaciones-usuario'),
+    path('notificaciones-usuario/<int:id_notif_usuario>/leida/', MarcarNotificacionLeidaView.as_view(), name='marcar-notificacion-leida'),
+
 ]   
 
