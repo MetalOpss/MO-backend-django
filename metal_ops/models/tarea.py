@@ -10,11 +10,12 @@ class Tarea(models.Model):
     servicio = models.ForeignKey(Servicio, on_delete=models.CASCADE)
     usuario_id = models.BigIntegerField(null=True, blank=True)
     maquina = models.ForeignKey(Maquina, on_delete=models.SET_NULL, null=True, blank=True)
+    descripcion = models.TextField(null=True, blank=True)  # 👈 Nuevo campo
     estado_tarea = models.CharField(max_length=20, choices=[
         ("PENDIENTE", "Pendiente"),
         ("EN_PROCESO", "En proceso"),
         ("FINALIZADA", "Finalizada"),
-        ("EN_CORRECCION", "En corrección") #Este campo en tarea no es util
+        ("EN_CORRECCION", "En corrección"),
     ])
     tiempo_planificado = models.DurationField(null=True, blank=True)
     tiempo_real = models.DurationField(null=True, blank=True)
