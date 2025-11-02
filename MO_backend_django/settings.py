@@ -39,21 +39,21 @@ ALLOWED_HOSTS = []
 
 #DESCOMENTAR CUANDO ESTE LISTO SPRRINGBOOT🚨🚨🚨💩💩💀💀💯🤒🤒😡👈👉💯💯
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'metal_ops.authentication.SpringJWTAuthentication',
-#     ),
-#     'DEFAULT_PERMISSION_CLASSES': (
-#         'rest_framework.permissions.IsAuthenticated',
-#     )
-# }
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'metal_ops.authentication.SpringJWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
+}
 
 #BORRAR CUANDO ESTE LISTO SPRRINGBOOT🚨🚨🚨💩💩💀💀💯🤒🤒😡👈👉💯💯
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
-    ]
-}
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.AllowAny',
+#     ]
+# }
 
 
 SIMPLE_JWT = {
