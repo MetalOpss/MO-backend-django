@@ -9,8 +9,10 @@ class NotificacionSerializer(serializers.ModelSerializer):
 
 
 class NotificacionUsuarioSerializer(serializers.ModelSerializer):
-    notificacion = NotificacionSerializer(read_only=True)
+    notificacion = serializers.PrimaryKeyRelatedField(queryset=Notificacion.objects.all())
 
     class Meta:
         model = NotificacionUsuario
         fields = '__all__'
+
+
