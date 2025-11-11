@@ -1,10 +1,12 @@
 from django.db import models
 from .cliente import Cliente
 from .sede import Sede
+from .servicio import Servicio
 
 class OrdenTrabajo(models.Model):
     id_ot = models.BigAutoField(primary_key=True)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, related_name="ordenes")
+    usuario_id = models.BigIntegerField(null=True, blank=True)
     titulo = models.CharField(max_length=255)
     tipo_ot = models.CharField(max_length=20, choices=[
         ("EN_COLA", "En cola"),
@@ -35,3 +37,30 @@ class ArchivoAdjunto(models.Model):
 
     def __str__(self):
         return f"Archivo OT-{self.orden_trabajo.id_ot}"
+    
+class OrdenTrabajoServicio(models.Model): #SOLO SIRVE PARA SABER QUE SERVICIOS TIENE UNA OT (util para cuandos e creen las tareas)
+    """
+    Tabla intermedia que registra qué servicios fueron seleccionados
+    al crear una Orden de Trabajo (Paso 3 del modal frontend).
+    
+    Esta tabla NO tiene orden, solo registra la relación OT-Servicio.
+    El orden de ejecución se maneja en la tabla Tarea.
+    """
+    id = models.BigAutoField(primary_key=True)
+    orden_trabajo = models.ForeignKey(
+        OrdenTrabajo, 
+        on_delete=models.CASCADE, 
+        related_name="servicios_incluidos"
+    )
+    servicio = models.ForeignKey(
+        Servicio, 
+        on_delete=models.CASCADE,
+        related_name="ordenes_trabajo"
+    )
+    
+    class Meta:
+        db_table = "orden_trabajo_servicio"
+        unique_together = ("orden_trabajo", "servicio")  # No duplicar servicios
+
+    def __str__(self):
+        return f"OT-{self.orden_trabajo.id_ot} - {self.servicio.nombre}"
