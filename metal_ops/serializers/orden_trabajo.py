@@ -6,7 +6,7 @@ class OrdenTrabajoSerializer(serializers.ModelSerializer):
     servicios_ids = serializers.ListField(
         child=serializers.IntegerField(),
         write_only=True,
-        required=True
+        required=False  # ✅ Cambiar a False para permitir edición sin servicios
     )
     
     # Opcional: Para devolver los servicios al hacer GET
@@ -29,6 +29,12 @@ class OrdenTrabajoSerializer(serializers.ModelSerializer):
             'servicios_incluidos'
         ]
         read_only_fields = ['id_ot', 'fecha_registro']
+
+        extra_kwargs = {
+            'cliente': {'required': False},
+            'sede': {'required': False},
+            'fecha_entrega': {'required': False},
+        }
     
     def get_servicios_incluidos(self, obj):
         """Devuelve los servicios de la OT al hacer GET"""
@@ -42,7 +48,10 @@ class OrdenTrabajoSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         # 1. Extraer servicios_ids del payload
-        servicios_ids = validated_data.pop('servicios_ids')
+        servicios_ids = validated_data.pop('servicios_ids', [])  # ✅ Default a lista vacía
+        
+        if not servicios_ids:
+            raise serializers.ValidationError({"servicios_ids": "Debes seleccionar al menos un servicio"})
         
         # 2. Crear la OrdenTrabajo
         orden_trabajo = OrdenTrabajo.objects.create(**validated_data)
@@ -54,7 +63,28 @@ class OrdenTrabajoSerializer(serializers.ModelSerializer):
                 servicio_id=servicio_id
             )
         
-        # 4. Las Tareas se crearán manualmente más adelante
-        # (Código removido)
-        
         return orden_trabajo
+    
+    def update(self, instance, validated_data):
+        # ✅ Nuevo método para manejar actualizaciones
+        # Extraer servicios_ids si viene (opcional en updates)
+        servicios_ids = validated_data.pop('servicios_ids', None)
+        
+        # Actualizar campos básicos
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+        
+        # Si se enviaron servicios_ids, actualizar servicios
+        if servicios_ids is not None:
+            # Eliminar servicios existentes
+            instance.servicios_incluidos.all().delete()
+            
+            # Crear nuevos servicios
+            for servicio_id in servicios_ids:
+                OrdenTrabajoServicio.objects.create(
+                    orden_trabajo=instance,
+                    servicio_id=servicio_id
+                )
+        
+        return instance
