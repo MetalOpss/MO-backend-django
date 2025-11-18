@@ -4,6 +4,12 @@ class Maquina(models.Model):
     id_maquina = models.BigAutoField(primary_key=True)
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField(null=True, blank=True)
+    usuario_id = models.BigIntegerField(null=True, blank=True) 
+    estado = models.CharField(max_length=20, choices=[
+        ("DISPONIBLE", "Disponible"),
+        ("OCUPADA", "Ocupada"),
+        ("MANTENIMIENTO", "Mantenimiento"),
+    ], default="DISPONIBLE")  
 
     class Meta:
         db_table = "maquina"
