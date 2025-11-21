@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (
     CrearSedeView, ListarSedeView, CrearClienteView, CrearOrdenTrabajoView, ListarOrdenTrabajoView, EditarOrdenTrabajoView,
-    EliminarOrdenTrabajoView, ObtenerServiciosOTView, ListarMaquinaView, CrearServicioView, ListarClienteView, EditarClienteView,
+    EliminarOrdenTrabajoView, ObtenerServiciosOTView, ListarMaquinaView, EditarMaquinaView, CrearServicioView, ListarClienteView, EditarClienteView,
     EliminarClienteView,
     CrearMaquinaView, CrearTareaView, ListarTareaView, EditarTareaView,
     EliminarTareaView, CrearNotificacionUsuarioView, ListarNotificacionesUsuarioView, MarcarNotificacionLeidaView,
@@ -21,6 +21,7 @@ urlpatterns = [
     path('ordenes/eliminar/<int:id_ot>', EliminarOrdenTrabajoView.as_view(), name='eliminar-orden'),
     path('maquinas/crear/', CrearMaquinaView.as_view(), name='crear-maquina'),
     path('maquinas/lista/', ListarMaquinaView.as_view(), name='lista-cliente'),
+    path('maquinas/editar/<int:id_maquina>/', EditarMaquinaView.as_view(), name='editar-maquina'),  # 🆕
     path('ordenes/<int:id_ot>/servicios/', ObtenerServiciosOTView.as_view(), name='servicios-ot'),
     path('servicios/crear/', CrearServicioView.as_view(), name='crear-servicio'),
     path('tareas/crear/', CrearTareaView.as_view(), name='crear-tarea'),
