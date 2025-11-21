@@ -7,7 +7,7 @@ from .orden_trabajo import (
     EditarOrdenTrabajoView, EliminarOrdenTrabajoView,
     ObtenerServiciosOTView  # ✅ Agregar esta línea
 )
-from .maquina import CrearMaquinaView, ListarMaquinaView
+from .maquina import CrearMaquinaView, ListarMaquinaView, EditarMaquinaView
 from .servicio import CrearServicioView, ListarServicioView
 from .tarea import (
     CrearTareaView, ListarTareaView,
