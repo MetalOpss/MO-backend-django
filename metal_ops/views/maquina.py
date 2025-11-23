@@ -17,3 +17,9 @@ class EditarMaquinaView(generics.UpdateAPIView):
     serializer_class = MaquinaSerializer
     lookup_field = "id_maquina"
     permission_classes = [ORPermission(IsPlanner, IsAtencion)]
+
+class EliminarMaquinaView(generics.DestroyAPIView):
+    queryset = Maquina.objects.all()
+    serializer_class = MaquinaSerializer
+    lookup_field = "id_maquina"
+    permission_classes = [ORPermission(IsPlanner, IsAtencion)]
