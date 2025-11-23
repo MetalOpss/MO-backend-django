@@ -10,4 +10,14 @@ class CrearServicioView(generics.CreateAPIView):
 class ListarServicioView(generics.ListAPIView):
     queryset = Servicio.objects.all()
     serializer_class = ServicioSerializer
-    permission_classes = [ORPermission(IsAtencion, IsAdmin, IsOperario, IsPlanner)]
+
+class EditarServicioView(generics.UpdateAPIView):
+    queryset = Servicio.objects.all()
+    serializer_class = ServicioSerializer
+    lookup_field = "id_servicio"
+
+class EliminarServicioView(generics.DestroyAPIView):
+    queryset = Servicio.objects.all()
+    serializer_class = ServicioSerializer
+    lookup_field = "id_servicio"
+    permission_classes = [IsAdmin]
