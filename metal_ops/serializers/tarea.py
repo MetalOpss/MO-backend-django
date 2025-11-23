@@ -39,10 +39,10 @@ class TareaSerializer(serializers.ModelSerializer):
                 validated_data['fecha_fin_programada'] = fecha_inicio + timedelta(minutes=minutos)
         
         # 🆕 Cambiar estado de la máquina a OCUPADA
-        if 'maquina' in validated_data and validated_data['maquina']:
-            maquina = validated_data['maquina']
-            maquina.estado = 'OCUPADA'
-            maquina.save()
+        # if 'maquina' in validated_data and validated_data['maquina']:
+        #     maquina = validated_data['maquina']
+        #     maquina.estado = 'OCUPADA'
+        #     maquina.save()
         
         # 🆕 Cambiar estado de la OT a EN PROCESO
         if 'orden_trabajo' in validated_data:
