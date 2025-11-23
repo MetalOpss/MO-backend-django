@@ -5,7 +5,7 @@ from .views import (
     EliminarClienteView,
     CrearMaquinaView, CrearTareaView, ListarTareaView, EditarTareaView,
     EliminarTareaView, CrearNotificacionUsuarioView, ListarNotificacionesUsuarioView, MarcarNotificacionLeidaView,
-    CrearNotificacionView, ListarNotificacionesView, EditarNotificacionView, EliminarNotificacionView
+    CrearNotificacionView, ListarNotificacionesView, EditarNotificacionView, EliminarNotificacionView, EliminarFlujoOTView
 )
 
 urlpatterns = [
@@ -19,6 +19,7 @@ urlpatterns = [
     path('ordenes/lista/', ListarOrdenTrabajoView.as_view(), name='lista-orden'),
     path('ordenes/editar/<int:id_ot>', EditarOrdenTrabajoView.as_view(), name='editar-orden'),
     path('ordenes/eliminar/<int:id_ot>', EliminarOrdenTrabajoView.as_view(), name='eliminar-orden'),
+    path('ordenes/<int:id_ot>/eliminar-flujo/', EliminarFlujoOTView.as_view(), name='eliminar-flujo-ot'),
     path('maquinas/crear/', CrearMaquinaView.as_view(), name='crear-maquina'),
     path('maquinas/lista/', ListarMaquinaView.as_view(), name='lista-cliente'),
     path('maquinas/editar/<int:id_maquina>/', EditarMaquinaView.as_view(), name='editar-maquina'),  # 🆕

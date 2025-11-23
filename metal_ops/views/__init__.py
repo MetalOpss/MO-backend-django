@@ -5,7 +5,7 @@ from .cliente import (
 from .orden_trabajo import (
     CrearOrdenTrabajoView, ListarOrdenTrabajoView,
     EditarOrdenTrabajoView, EliminarOrdenTrabajoView,
-    ObtenerServiciosOTView  # ✅ Agregar esta línea
+    ObtenerServiciosOTView, EliminarFlujoOTView
 )
 from .maquina import CrearMaquinaView, ListarMaquinaView, EditarMaquinaView
 from .servicio import CrearServicioView, ListarServicioView

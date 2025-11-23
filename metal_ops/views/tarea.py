@@ -23,4 +23,4 @@ class EliminarTareaView(generics.DestroyAPIView):
     queryset = Tarea.objects.all()
     serializer_class = TareaSerializer
     lookup_field = "id_tarea"
-    permission_classes = [IsAtencion]
+    permission_classes = [ORPermission(IsPlanner, IsAtencion)]
