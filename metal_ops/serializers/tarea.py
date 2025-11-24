@@ -55,3 +55,36 @@ class TareaSerializer(serializers.ModelSerializer):
                 orden.save()
         
         return super().create(validated_data)
+    
+    def update(self, instance, validated_data):
+        """
+        🆕 Lógica especial al actualizar estado de tarea
+        """
+        nuevo_estado = validated_data.get('estado_tarea', instance.estado_tarea)
+        
+        # Si se marca como EN_CORRECCION, cambiar OT a tipo CORRECCION
+        if nuevo_estado == 'EN_CORRECCION' and instance.estado_tarea != 'EN_CORRECCION':
+            orden = instance.orden_trabajo
+            orden.tipo_ot = 'CORRECCION'
+            orden.save()
+        
+        # Si se marca como FINALIZADA, verificar si es la última tarea
+        if nuevo_estado == 'FINALIZADA' and instance.estado_tarea != 'FINALIZADA':
+            orden = instance.orden_trabajo
+            
+            # Obtener todas las tareas de la OT
+            tareas_de_ot = Tarea.objects.filter(orden_trabajo=orden)
+            
+            # Verificar si todas las tareas estarán finalizadas después de este update
+            todas_finalizadas = all(
+                tarea.estado_tarea == 'FINALIZADA' or tarea.id_tarea == instance.id_tarea
+                for tarea in tareas_de_ot
+            )
+            
+            # Si todas están finalizadas, cambiar estado de OT
+            if todas_finalizadas:
+                orden.estado_ot = 'FINALIZADA'
+                orden.save()
+        
+        # Actualizar la tarea
+        return super().update(instance, validated_data)
