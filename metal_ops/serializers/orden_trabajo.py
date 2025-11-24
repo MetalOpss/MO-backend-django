@@ -6,7 +6,7 @@ class OrdenTrabajoSerializer(serializers.ModelSerializer):
     servicios_ids = serializers.ListField(
         child=serializers.IntegerField(),
         write_only=True,
-        required=False  # ✅ Cambiar a False para permitir edición sin servicios
+        required=False
     )
     
     # Opcional: Para devolver los servicios al hacer GET
@@ -30,8 +30,11 @@ class OrdenTrabajoSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = ['id_ot', 'fecha_registro']
 
+        # 🆕 CRÍTICO: Hacer todos los campos opcionales para updates parciales
         extra_kwargs = {
             'cliente': {'required': False},
+            'titulo': {'required': False},  # 👈 ESTE ES EL CAMBIO CLAVE
+            'tipo_ot': {'required': False},  # 👈 ESTE ES EL CAMBIO CLAVE
             'sede': {'required': False},
             'fecha_entrega': {'required': False},
         }
@@ -48,7 +51,7 @@ class OrdenTrabajoSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         # 1. Extraer servicios_ids del payload
-        servicios_ids = validated_data.pop('servicios_ids', [])  # ✅ Default a lista vacía
+        servicios_ids = validated_data.pop('servicios_ids', [])
         
         if not servicios_ids:
             raise serializers.ValidationError({"servicios_ids": "Debes seleccionar al menos un servicio"})
@@ -66,11 +69,14 @@ class OrdenTrabajoSerializer(serializers.ModelSerializer):
         return orden_trabajo
     
     def update(self, instance, validated_data):
-        # ✅ Nuevo método para manejar actualizaciones
+        """
+        🆕 Método para manejar actualizaciones PARCIALES
+        Permite actualizar solo los campos que se envíen
+        """
         # Extraer servicios_ids si viene (opcional en updates)
         servicios_ids = validated_data.pop('servicios_ids', None)
         
-        # Actualizar campos básicos
+        # Actualizar solo los campos que vienen en validated_data
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
