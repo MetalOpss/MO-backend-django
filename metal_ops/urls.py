@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (
     CrearSedeView, ListarSedeView, CrearClienteView, CrearOrdenTrabajoView, ListarOrdenTrabajoView, EditarOrdenTrabajoView,
     EliminarOrdenTrabajoView, ObtenerServiciosOTView, ListarMaquinaView, EditarMaquinaView, CrearServicioView, ListarServicioView, ListarClienteView, EditarClienteView,
-    EliminarClienteView,
+    EliminarClienteView, EliminarMaquinaView, EditarServicioView, EliminarServicioView,
     CrearMaquinaView, CrearTareaView, ListarTareaView, EditarTareaView,
     EliminarTareaView, CrearNotificacionUsuarioView, ListarNotificacionesUsuarioView, MarcarNotificacionLeidaView,
     CrearNotificacionView, ListarNotificacionesView, EditarNotificacionView, EliminarNotificacionView, EliminarFlujoOTView
@@ -22,10 +22,13 @@ urlpatterns = [
     path('ordenes/<int:id_ot>/eliminar-flujo/', EliminarFlujoOTView.as_view(), name='eliminar-flujo-ot'),
     path('maquinas/crear/', CrearMaquinaView.as_view(), name='crear-maquina'),
     path('maquinas/lista/', ListarMaquinaView.as_view(), name='lista-cliente'),
-    path('maquinas/editar/<int:id_maquina>/', EditarMaquinaView.as_view(), name='editar-maquina'),  # 🆕
+    path('maquinas/editar/<int:id_maquina>/', EditarMaquinaView.as_view(), name='editar-maquina'),
+    path('maquinas/eliminar/<int:id_maquina>/', EliminarMaquinaView.as_view(), name='eliminar-maquina'),
     path('ordenes/<int:id_ot>/servicios/', ObtenerServiciosOTView.as_view(), name='servicios-ot'),
     path('servicios/crear/', CrearServicioView.as_view(), name='crear-servicio'),
     path('servicios/lista/', ListarServicioView.as_view(), name='listar-servicios'),
+    path('servicios/editar/<int:id_servicio>/', EditarServicioView.as_view(), name='editar-servicio'),
+    path('servicios/eliminar/<int:id_servicio>/', EliminarServicioView.as_view(), name='eliminar-servicio'),
     path('tareas/crear/', CrearTareaView.as_view(), name='crear-tarea'),
     path('tareas/lista/', ListarTareaView.as_view(), name='lista-tarea'),
     path('tareas/editar/<int:id_tarea>', EditarTareaView.as_view(), name='editar-tarea'),
