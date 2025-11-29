@@ -5,3 +5,4 @@ from .maquina import MaquinaSerializer
 from .servicio import ServicioSerializer
 from .tarea import TareaSerializer
 from .notificacion import NotificacionSerializer, NotificacionUsuarioSerializer
+from .archivo_adjunto_serializer import ArchivoAdjuntoSerializer
