@@ -5,7 +5,8 @@ from datetime import timedelta
 class TareaSerializer(serializers.ModelSerializer):
     # 🆕 Cambiamos para que TAMBIÉN devuelva los minutos en GET
     tiempo_planificado_minutos = serializers.SerializerMethodField()
-    
+    archivos_ot = serializers.SerializerMethodField()
+
     class Meta:
         model = Tarea
         fields = [
@@ -22,6 +23,7 @@ class TareaSerializer(serializers.ModelSerializer):
             'orden_ejecucion',
             'fecha_inicio_programada',
             'fecha_fin_programada',
+            'archivos_ot',
         ]
         read_only_fields = ['id_tarea', 'fecha_fin_programada']
         extra_kwargs = {
@@ -34,6 +36,22 @@ class TareaSerializer(serializers.ModelSerializer):
         if obj.tiempo_planificado:
             return int(obj.tiempo_planificado.total_seconds() / 60)
         return None
+    
+    def get_archivos_ot(self, obj):
+        """Obtener archivos adjuntos de la orden de trabajo"""
+        from metal_ops.models import ArchivoAdjunto
+        
+        archivos = ArchivoAdjunto.objects.filter(orden_trabajo=obj.orden_trabajo)
+        
+        return [
+            {
+                'id_archivo': archivo.id_archivo,
+                'archivo_url': archivo.archivo.url if archivo.archivo else None,
+                'descripcion': archivo.descripcion,
+                'fecha_subida': archivo.fecha_subida
+            }
+            for archivo in archivos
+        ]
     
     def create(self, validated_data):
         # 🆕 CAMBIO AQUÍ: usar initial_data en vez de validated_data
