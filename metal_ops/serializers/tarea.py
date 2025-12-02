@@ -72,7 +72,22 @@ class TareaSerializer(serializers.ModelSerializer):
                 orden.estado_ot = 'EN PROCESO'
                 orden.save()
         
-        return super().create(validated_data)
+        # Crear la tarea
+        tarea = super().create(validated_data)
+        
+        # 🆕 NOTIFICACIÓN: Si tiene usuario asignado, notificar
+        if tarea.usuario_id:
+            from metal_ops.utils.notificaciones import crear_notificacion_automatica
+            crear_notificacion_automatica(
+                titulo=f"Nueva tarea asignada: {tarea.orden_trabajo.titulo}",
+                mensaje=f"Se te ha asignado la tarea '{tarea.servicio.nombre}' (Paso {tarea.orden_ejecucion}).",
+                tipo="TAREA_ASIGNADA",
+                usuarios_ids=[tarea.usuario_id],
+                referencia_id=tarea.id_tarea,
+                referencia_tabla="tarea"
+            )
+        
+        return tarea
     
     def update(self, instance, validated_data):
         """

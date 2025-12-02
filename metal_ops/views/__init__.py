@@ -15,6 +15,6 @@ from .tarea import (
 )
 from .notificacion import (
     CrearNotificacionView, ListarNotificacionesView, EditarNotificacionView, EliminarNotificacionView,
-    CrearNotificacionUsuarioView, ListarNotificacionesUsuarioView, MarcarNotificacionLeidaView
+    CrearNotificacionUsuarioView, ListarNotificacionesUsuarioView, MarcarNotificacionLeidaView, NotificacionBienvenidaView
 )
 from .archivo_adjunto_view import SubirArchivoOTView, ListarArchivosOTView
