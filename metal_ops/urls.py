@@ -4,7 +4,7 @@ from .views import (
     EliminarOrdenTrabajoView, ObtenerServiciosOTView, ListarMaquinaView, EditarMaquinaView, CrearServicioView, ListarServicioView, ListarClienteView, EditarClienteView,
     EliminarClienteView, EliminarMaquinaView, EditarServicioView, EliminarServicioView,
     CrearMaquinaView, CrearTareaView, ListarTareaView, EditarTareaView,
-    EliminarTareaView, CrearNotificacionUsuarioView, ListarNotificacionesUsuarioView, MarcarNotificacionLeidaView,
+    EliminarTareaView, CrearNotificacionUsuarioView, ListarNotificacionesUsuarioView, MarcarNotificacionLeidaView, NotificacionBienvenidaView,
     CrearNotificacionView, ListarNotificacionesView, EditarNotificacionView, EliminarNotificacionView, EliminarFlujoOTView, SubirArchivoOTView, ListarArchivosOTView
 )
 
@@ -44,6 +44,7 @@ urlpatterns = [
     path('notificaciones-usuario/crear/', CrearNotificacionUsuarioView.as_view(), name='crear-notificacion-usuario'),
     path('notificaciones-usuario/<int:usuario_id>/', ListarNotificacionesUsuarioView.as_view(), name='listar-notificaciones-usuario'),
     path('notificaciones-usuario/<int:id_notif_usuario>/leida/', MarcarNotificacionLeidaView.as_view(), name='marcar-notificacion-leida'),
+    path('notificaciones/bienvenida/', NotificacionBienvenidaView.as_view(), name='notificacion-bienvenida'),
 
     path('ordenes/<int:id_ot>/archivos/', ListarArchivosOTView.as_view(), name='listar-archivos-ot'),  # 🆕
     path('ordenes/<int:id_ot>/subir-archivo/', SubirArchivoOTView.as_view(), name='subir-archivo-ot'),  # 🆕
